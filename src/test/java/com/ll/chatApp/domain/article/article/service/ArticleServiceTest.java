@@ -1,7 +1,7 @@
-package com.ll.chatApp.memeber.member.service;
+package com.ll.chatApp.domain.article.article.service;
 
-import com.ll.chatApp.domain.member.member.entity.Member;
-import com.ll.chatApp.domain.member.member.service.MemberService;
+import com.ll.chatApp.domain.article.article.entity.Article;
+import com.ll.chatApp.domain.article.article.servie.ArticleService;
 import com.ll.chatApp.global.rsData.RsData;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
@@ -15,15 +15,16 @@ import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 @SpringBootTest
 @ActiveProfiles("test") // 테스트를 할 때에도 application.yml을 사용하겠다는 의미이다.
 @Transactional
-public class MemberServiceTest {
+public class ArticleServiceTest {
     @Autowired
-    private MemberService memberService;
+    private ArticleService articleService;
 
-    @DisplayName("회원가입")
+    @DisplayName("글쓰기")
     @Test
-    void t1(){
-        RsData<Member> joinRs = memberService.join("usernew", "1234");
-        Member member = joinRs.getData();
-        assertThat(member.getId()).isGreaterThan(0L);
+    void t1() {
+        RsData<Article> writeRs = articleService.write(1L, "제목", "내용");
+        Article article = writeRs.getData();
+
+        assertThat(article.getId()).isGreaterThan(0L);
     }
 }
