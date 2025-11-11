@@ -7,10 +7,12 @@ import com.ll.chatApp.global.rsData.RsData;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Service
 @RequiredArgsConstructor
 public class ArticleService {
-    private final ArticleRepository ArticleRepository;
+    private final ArticleRepository articleRepository;
 
     public RsData<Article> write(Long memberId, String title, String content) {
         Article article = Article.builder()
@@ -19,8 +21,12 @@ public class ArticleService {
                 .content(content)
                 .build();
 
-        ArticleRepository.save(article);
+        articleRepository.save(article);
 
         return RsData.of("200", "글 작성 성공", article);
+    }
+
+    public Optional<Article> findById(long id) {
+        return articleRepository.findById(id);
     }
 }
