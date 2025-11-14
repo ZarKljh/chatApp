@@ -54,7 +54,14 @@ public class ArticleService {
         return articleRepository.findAll();
     }
 
-    public Page<Article> search(Pageable pageable) {
+    public Page<Article> search(List<String> kwTypes, String kw, Pageable pageable) {
+        if(kwTypes.contains("title") && kwTypes.contains("content")){
+            return articleRepository.findByTitileContainIngOrContentContaining(kw, kw, pageable);
+        } else if(kwTypes.contains("title")) {
+            return articleRepository.findByTitileContainIng(kw, kw, pageable);
+        } else if(kwTypes.contains("content")){
+            return articleRepository.findByContentContainIng(kw, kw, pageable);
+        }
         return articleRepository.findAll(pageable);
     }
 }
